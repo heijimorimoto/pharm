@@ -19,12 +19,15 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 Route::prefix('clients')->group(function () {
     Route::get('/', 'ClientController@index');
-    Route::show('show', 'ClientController@show');
-    Route::post('create', 'ClientController@store');
-    Route::match(['put', 'patch'], 'update', 'ClientController@update');
-    Route::delete('delete', 'ClientController@delete');
 });
 
-Route::prefix('product')->group(function () {
+Route::prefix('products')->group(function () {
     Route::get('/', 'ProductController@index');
+    Route::get('{product}', 'ProductController@show');
+    Route::match(
+        ['put', 'patch'],
+        '{product}',
+        'ProductController@update'
+    );
+    Route::delete('{product}', 'ProductController@delete');
 });
