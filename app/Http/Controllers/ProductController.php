@@ -4,9 +4,13 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Product;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\Confirmation;
 
 class ProductController extends Controller
 {
+    private $module = 'product';
+
     /**
      * Undocumented function
      *
@@ -16,7 +20,13 @@ class ProductController extends Controller
     {
         $products = Product::get();
         return response()
-            ->json(['data' => $products]);
+            ->json([
+                'module'    =>  $this->module,
+                'columns'   =>  [ 'id', 'name', 'description', 'price', 'created_at', 'updated_at' ],
+                'data'      =>  $products
+            ]);
+
+        // Mail::to('heiji.morimotoo@gmail.com')->send(new Confirmation());
     }
 
     /**
